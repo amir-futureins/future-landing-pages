@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>תודה! קיבלנו את הפרטים | Future Insurance</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath d='M32 4 8 13v17c0 15 10 26 24 30 14-4 24-15 24-30V13z' fill='%23071330'/%3E%3Cpath d='M24 20h18v6H31v5h9v6h-9v9h-7z' fill='%23d4af6a'/%3E%3C/svg%3E">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#ffffff">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800&family=Rubik:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <script src="assets/js/config.js"></script>
+  <style>
+    body { background: linear-gradient(180deg, #fff, var(--bg)); }
+    .ty { min-height: 100vh; min-height: 100dvh; display: grid; place-items: center; padding: 40px 16px; position: relative; overflow: hidden; isolation: isolate; }
+    .ty-card { background: #fff; border-radius: var(--radius-lg); padding: 36px 24px; max-width: 520px; width: 100%; text-align: center; box-shadow: var(--shadow-soft); border: 1px solid #edf0f6; animation: popIn .6s var(--ease); }
+    .ty-check { width: 96px; height: 96px; margin: 0 auto 18px; }
+    .ty-check circle { fill: none; stroke: var(--emerald); stroke-width: 5; stroke-dasharray: 280; stroke-dashoffset: 280; animation: draw .8s .2s var(--ease) forwards; }
+    .ty-check path { fill: none; stroke: var(--emerald); stroke-width: 6; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 70; stroke-dashoffset: 70; animation: draw .5s .9s var(--ease) forwards; }
+    @keyframes draw { to { stroke-dashoffset: 0; } }
+    .ty h1 { font-size: clamp(1.6rem, 6vw, 2.1rem); }
+    .ty p { color: var(--muted); margin-top: 10px; }
+    .ty-steps { text-align: right; margin: 24px 0; display: grid; gap: 10px; }
+    .ty-steps div { display: flex; gap: 12px; align-items: center; background: #f6f8fc; border-radius: 14px; padding: 12px 14px; font-weight: 500; }
+    .ty-steps b { flex: none; width: 30px; height: 30px; border-radius: 10px; display: grid; place-items: center; background: var(--royal); color: #fff; font-family: var(--font-display); }
+    .ty .btn { width: 100%; margin-top: 8px; }
+    .confetti { position: absolute; top: -20px; width: 10px; height: 16px; border-radius: 3px; animation: fall linear forwards; z-index: -1; }
+    @keyframes fall { to { transform: translateY(110vh) rotate(720deg); opacity: .2; } }
+  </style>
+</head>
+<body>
+  <main class="ty">
+    <div class="hero-bg" aria-hidden="true"><span class="blob b1"></span><span class="blob b2"></span><div class="grid-overlay"></div></div>
+    <div class="ty-card">
+      <svg class="ty-check" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="44"/><path d="M30 52l13 13 27-29"/></svg>
+      <h1 id="tyTitle">תודה! הפרטים התקבלו</h1>
+      <p>הבדיקה כבר בדרך — ללא עלות וללא התחייבות.</p>
+      <div class="ty-steps">
+        <div><b>1</b>אנחנו משווים מחירים בין חברות הביטוח</div>
+        <div><b>2</b>נחזור אליכם בטלפון, לרוב תוך 24 שעות</div>
+        <div><b>3</b>תקבלו הצעה מסודרת ותחליטו בנחת</div>
+      </div>
+      <p style="margin-bottom:14px">רוצים לזרז? שלחו לנו הודעה עכשיו:</p>
+      <a class="btn btn-wa" data-wa="היי, השארתי עכשיו פרטים לבדיקת חיסכון בביטוח ואשמח שתחזרו אליי"><svg width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2z"/></svg>המשך בוואטסאפ</a>
+      <a class="btn btn-ghost" href="javascript:history.back()">חזרה לדף</a>
+      <p class="form-legal"><a href="privacy.html#privacy" data-legal="privacy">מדיניות פרטיות</a> · <a href="privacy.html#terms" data-legal="terms">תנאי שימוש</a> · <a href="privacy.html#accessibility" data-legal="accessibility">הצהרת נגישות</a></p>
+    </div>
+  </main>
+  <script src="assets/js/core.js"></script>
+  <script>
+    (function () {
+      var C = window.SITE_CONFIG || {};
+      var name = '';
+      try { name = sessionStorage.getItem('lead_first_name') || ''; } catch (_) {}
+      if (name) document.getElementById('tyTitle').textContent = 'תודה ' + name + '! הפרטים התקבלו';
+      var src = new URLSearchParams(location.search).get('src');
+      var first = document.querySelector('.ty-steps div');
+      if (src === 'health' && first) first.lastChild.textContent = 'סורקים את הר הביטוח ומאתרים כפל ביטוחי';
+      if (src === 'car' && first) first.lastChild.textContent = 'בודקים את העבר הביטוחי ומשווים הצעות לביטוח הרכב';
+
+      // המרת Google Ads — פעם אחת בלבד לכל ליד (רענון הדף לא יספור שוב)
+      var pending = false;
+      try { pending = sessionStorage.getItem('lead_conv_pending') === '1'; sessionStorage.removeItem('lead_conv_pending'); } catch (_) {}
+      if (pending) {
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({ event: 'lead_conversion', lead_source: (function(){ try { return sessionStorage.getItem('lead_source'); } catch (_) { return ''; } })() });
+        if (C.conversionSendTo) {
+          var fire = function () { if (window.gtag) window.gtag('event', 'conversion', { send_to: C.conversionSendTo }); };
+          if (window.gtag) fire(); else window.addEventListener('load', fire);
+        }
+      }
+
+      var colors = ['#1d4ed8', '#60a5fa', '#10b981', '#d4af6a', '#1e3a8a'];
+      if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        for (var i = 0; i < 60; i++) {
+          var c = document.createElement('span');
+          c.className = 'confetti';
+          c.style.left = Math.random() * 100 + 'vw';
+          c.style.background = colors[i % colors.length];
+          c.style.animationDuration = (2.5 + Math.random() * 3) + 's';
+          c.style.animationDelay = Math.random() * 1.2 + 's';
+          document.querySelector('.ty').appendChild(c);
+        }
+      }
+    })();
+  </script>
+</body>
+</html>
