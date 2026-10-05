@@ -744,6 +744,7 @@
     const unknownPay = el('paymentUnknown').checked;
     const payload = {
       pageSource: 'ביטוח משכנתא / חיים',
+      sheetName: 'משכנתא וחיים',          // שם הלשונית ב-Google Sheets
       firstName: el('firstName').value.trim(),
       lastName: el('lastName').value.trim(),
       fullName: `${el('firstName').value.trim()} ${el('lastName').value.trim()}`,

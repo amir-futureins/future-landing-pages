@@ -627,6 +627,7 @@
     const est = formEstimate();
     const payload = {
       pageSource: 'ביטוח בריאות / מחלות קשות',
+      sheetName: 'בריאות ומחלות קשות',          // שם הלשונית ב-Google Sheets
       firstName: el('firstName').value.trim(),
       lastName: el('lastName').value.trim(),
       fullName: `${el('firstName').value.trim()} ${el('lastName').value.trim()}`,

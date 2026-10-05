@@ -414,17 +414,28 @@
       device: /Mobi|Android|iPhone/i.test(navigator.userAgent) ? 'mobile' : 'desktop'
     }, payload, consent, getAttribution());
 
+    // שם הלשונית בגיליון — כל דף מגדיר sheetName משלו; ברירת מחדל: שם הדף
+    if (!full.sheetName) full.sheetName = full.pageSource || 'לידים';
+
     try {
       if (!/^https:\/\/script\.google\.com\//.test(C.scriptUrl || '')) throw new Error('scriptUrl not configured');
       const ctrl = new AbortController();
-      const t = setTimeout(() => ctrl.abort(), 12000);
-      // text/plain מונע preflight; ב-Apps Script קוראים e.postData.contents
-      await fetch(C.scriptUrl, {
-        method: 'POST', mode: 'no-cors',
-        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      const t = setTimeout(() => ctrl.abort(), 20000);
+      // ללא כותרות → text/plain (בקשה "פשוטה" ללא preflight). Apps Script מחזיר CORS,
+      // כך שאפשר לקרוא את התשובה ולוודא שהליד באמת נשמר ({ok:true}).
+      const res = await fetch(C.scriptUrl, {
+        method: 'POST', redirect: 'follow',
         body: JSON.stringify(full), signal: ctrl.signal
       });
       clearTimeout(t);
+      const text = await res.text();
+      let reply = null;
+      try { reply = JSON.parse(text); } catch (_) { /* סקריפט ישן שמחזיר טקסט — מספיק סטטוס 200 */ }
+      if (!res.ok || (reply && reply.ok === false)) {
+        const err = new Error('server rejected lead: ' + ((reply && reply.error) || res.status));
+        err.serverSide = true;
+        throw err;
+      }
       track('generate_lead', { lead_source: payload.pageSource });
       try {
         sessionStorage.setItem('lead_first_name', payload.firstName || '');
@@ -434,6 +445,14 @@
       location.href = thankYou + (source ? '?src=' + encodeURIComponent(source) : '');
     } catch (err) {
       console.error('[Future Insurance] שליחת הליד נכשלה:', err);
+      // תקלת רשת/CORS — ייתכן שהליד בכל זאת הגיע. שולחים עותק גיבוי מסומן (עדיף כפילות מאובדן ליד)
+      if (!err.serverSide && /^https:\/\/script\.google\.com\//.test(C.scriptUrl || '')) {
+        try {
+          fetch(C.scriptUrl, { method: 'POST', mode: 'no-cors', keepalive: true,
+            body: JSON.stringify(Object.assign({}, full, { deliveryRetry: 'כן' })) });
+        } catch (_) {}
+      }
+      track('lead_submit_error', { reason: String(err.message || err).slice(0, 80) });
       sending = false;
       if (button) { button.disabled = false; button.classList.remove('loading'); }
       showFallback(form, full);

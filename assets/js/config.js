@@ -17,7 +17,7 @@ window.SITE_CONFIG = {
   cookieMode: 'notice',
 
   // ----- כתובת ה-Web App של Google Apps Script המעודכנת -----
-  scriptUrl: 'https://script.google.com/macros/s/AKfycbzDo5PZOLEUKoGqLQSdnMs6GWq7OJeF77PMzm0vGY5v8sB_krOVtrhlle7nYxzcv05hYA/exec',
+  scriptUrl: 'https://script.google.com/macros/s/AKfycbxu4uYQHxzuGSsH8ljJ6xO0ooF2zZekvwK7HJh0IiF2fJWqM3v0oPv0EnrUqh0FSfLhzQ/exec',
 
   // ----- פרטי התקשרות -----
   phoneDisplay: '052-842-2884',

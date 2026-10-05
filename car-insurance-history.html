@@ -567,6 +567,7 @@
     const bd = V.parseDate(el('birthDate').value);
     const payload = {
       pageSource: 'עבר ביטוחי לרכב',
+      sheetName: 'עבר ביטוחי רכב',          // שם הלשונית ב-Google Sheets
       firstName: el('firstName').value.trim(),
       lastName: el('lastName').value.trim(),
       fullName: `${el('firstName').value.trim()} ${el('lastName').value.trim()}`,
